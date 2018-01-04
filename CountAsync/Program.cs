@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CountAsync
@@ -10,6 +7,13 @@ namespace CountAsync
     {
         static void Main(string[] args)
         {
+            DateTime start = DateTime.Now;
+
+            var countTask = new WordCounter().CountNonExistentWordsAsync();
+            int count = countTask.Result;
+
+            Console.WriteLine($"{count} words in {(DateTime.Now-start).TotalMilliseconds}ms");
+            Console.ReadLine();
         }
     }
 }
