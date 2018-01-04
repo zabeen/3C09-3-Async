@@ -10,7 +10,7 @@ namespace CountAsync
         public async Task<int> CountNonExistentWordsAsync()
         {
             Task<string> articleTask = new WebClient().DownloadStringTaskAsync(
-                @"https://archive.org/stream/warandpeace030164mbp/warandpeace030164mbp_djvu.txt");
+                @"https://msdn.microsoft.com/en-gb/library/mt674882.aspx");
             Task<string> wordsTask = new WebClient().DownloadStringTaskAsync(
                 @"https://github.com/dwyl/english-words");
 
