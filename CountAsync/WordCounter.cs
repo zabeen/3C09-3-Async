@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -12,20 +13,19 @@ namespace CountAsync
                 @"https://msdn.microsoft.com/en-gb/library/mt674882.aspx");
             Task<string> wordsTask = new WebClient().DownloadStringTaskAsync(
                 @"https://github.com/dwyl/english-words");
-
-            string article = await articleTask;
+          
             string words = await wordsTask;
-
             HashSet<string> wordList = new HashSet<string>(words.Split('\n'));
 
-            var nonExistentWords = 0;
+            ConcurrentBag<string> nonExistentWords = new ConcurrentBag<string>();
 
+            string article = await articleTask;
             Parallel.ForEach(article.Split('\n', ' '), word =>
             {
-                if (!wordList.Contains(word)) nonExistentWords++;
+                if (!wordList.Contains(word)) nonExistentWords.Add(word);
             });
 
-            return nonExistentWords;
+            return nonExistentWords.Count;
         }
     }
 }
