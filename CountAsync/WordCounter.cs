@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -21,10 +20,10 @@ namespace CountAsync
 
             var nonExistentWords = 0;
 
-            foreach (string word in article.Split('\n', ' '))
+            Parallel.ForEach(article.Split('\n', ' '), word =>
             {
                 if (!wordList.Contains(word)) nonExistentWords++;
-            }
+            });
 
             return nonExistentWords;
         }
